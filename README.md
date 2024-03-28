@@ -3,9 +3,9 @@ Splits BTA's old texture sheets into individual images
 
 
 ## Usage
-Place texture atlases into the `Input` directory
-Then run the `split.py` script (script uses the PIL library make sure you have it installed)
-The individual textures will be stored in the `Output` directory
+1. Place texture atlases into the `Input` directory.
+2. Then run the `split.py` script. (script uses the PIL library make sure you have it installed)
+3. The individual textures will be stored in the `Output` directory.
 
 ## Configuration
 This texture splitter script is setup to be easily configurable each atlas has its own settings file inside of the `Settings` directory

@@ -9,6 +9,10 @@ inputDirectory: str = scriptDirectory + "\Input" #Here you define your directory
 outputDirectory: str = scriptDirectory + "\Output" #Here you define your directory path where all images will be saved
 settingsDirectory: str = scriptDirectory + "\Settings" #Here you define your directory path where settings are saved
 
+os.makedirs(inputDirectory, exist_ok=True)
+os.makedirs(outputDirectory, exist_ok=True)
+os.makedirs(settingsDirectory, exist_ok=True)
+
 logList = list()
 
 def splitSheet(imageName: str, configLocation: str, outputFolder: str, textureWidthTiles:int ):
@@ -45,6 +49,7 @@ def splitSheet(imageName: str, configLocation: str, outputFolder: str, textureWi
           y = int(y)
           cropped = atlas.crop((x * tileSize, y * tileSize, (x + sizeX) * tileSize, (y + sizeY) * tileSize))
           saveLocation= os.path.join(outputDirectory, outputFolder + "/{:03}.png")
+          os.makedirs(outputDirectory + "/" + outputFolder, exist_ok=True)
           cropped.save(saveLocation.format(name))
           print("image saved to " + saveLocation.format(name))
         except:

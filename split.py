@@ -16,7 +16,13 @@ os.makedirs(settingsDirectory, exist_ok=True)
 logList = list()
 
 def splitSheet(imageName: str, configLocation: str, outputFolder: str, textureWidthTiles:int ):
-    atlas = Image.open(os.path.join(inputDirectory, imageName))
+    try:
+        atlas = Image.open(os.path.join(inputDirectory, imageName))
+    except Exception as e:
+        val = "Failed to open image '" + imageName + "' skipping! " + str(e)
+        print(val, e)
+        logList.append(val)
+        return
 
     file = open(settingsDirectory + "/" + configLocation, "r")
     config = file.readlines()
@@ -52,9 +58,9 @@ def splitSheet(imageName: str, configLocation: str, outputFolder: str, textureWi
           os.makedirs(outputDirectory + "/" + outputFolder, exist_ok=True)
           cropped.save(saveLocation.format(name))
           print("image saved to " + saveLocation.format(name))
-        except:
-            val = "Failed to process line '" + line + "' skipping!"
-            print(val)
+        except Exception as e:
+            val = "Failed to process line '" + line + "' skipping! " + str(e)
+            print(val, e)
             logList.append(val)
 
 splitSheet("terrain.png", "blocks.txt", "block", 32)
@@ -63,5 +69,12 @@ splitSheet("particles.png", "particles.txt", "particle", 16)
 splitSheet("kz.png", "paintings.txt", "art", 32)
 splitSheet("icons.png", "icons.txt", "icons", 256)
 
+print()
+print()
+print("Printing errors")
+print()
+
 for line in logList:
     print(line)
+
+input("Press enter to close...")
